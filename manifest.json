@@ -3,9 +3,16 @@
   "name": "Is Private Equity Owned?",
   "version": "0.1.0",
   "description": "Tells you at a glance whether the site you're on is owned by a private equity firm.",
+  "homepage_url": "https://github.com/avaleriani/isprivateequityowned",
   "minimum_chrome_version": "102",
-  "permissions": ["storage", "tabs", "alarms"],
-  "host_permissions": ["https://raw.githubusercontent.com/*"],
+  "permissions": [
+    "storage",
+    "tabs",
+    "alarms"
+  ],
+  "host_permissions": [
+    "https://raw.githubusercontent.com/*"
+  ],
   "background": {
     "service_worker": "src/background.js",
     "type": "module"

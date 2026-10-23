@@ -2,7 +2,7 @@
 // the periodic dataset refresh.
 
 import { hostnameFromUrl } from './domain.js';
-import { lookup, refreshRemote, getDatasetInfo, setRemoteUrl, invalidateCache } from './data.js';
+import { lookup, refreshRemote, getDatasetInfo, invalidateCache } from './data.js';
 
 const REFRESH_ALARM = 'refresh-dataset';
 
@@ -38,10 +38,10 @@ function badgeFor(verdict) {
   if (!stake) return style;
 
   const basis = verdict.stakeBasis === 'voting' ? ' of the votes' : '';
-  const title =
-    verdict.status === 'yes'
-      ? `${stake}${basis} held by ${describeOwners(verdict)}`
-      : `Private equity holds ${stake}${basis} — not control`;
+  let title;
+  if (verdict.status === 'yes') title = `${stake}${basis} held by ${describeOwners(verdict)}`;
+  else if (verdict.stake === 0) title = 'Private equity has fully exited';
+  else title = `Private equity holds ${stake}${basis} — not control`;
   return { text: stake, color: style.color, title: () => title };
 }
 
@@ -104,13 +104,21 @@ chrome.windows.onFocusChanged.addListener((windowId) => {
   if (windowId !== chrome.windows.WINDOW_ID_NONE) paintActiveTab();
 });
 
+// Chrome can drop alarms across browser restarts, so both entry points check.
+async function ensureRefreshAlarm() {
+  if (!(await chrome.alarms.get(REFRESH_ALARM))) {
+    await chrome.alarms.create(REFRESH_ALARM, { periodInMinutes: 720 });
+  }
+}
+
 chrome.runtime.onInstalled.addListener(async () => {
-  await chrome.alarms.create(REFRESH_ALARM, { periodInMinutes: 720 });
+  await ensureRefreshAlarm();
   await refreshRemote();
   await repaintAllTabs();
 });
 
 chrome.runtime.onStartup.addListener(async () => {
+  await ensureRefreshAlarm();
   await refreshRemote();
   await repaintAllTabs();
 });
@@ -144,12 +152,6 @@ async function handleMessage(message) {
     case 'refresh': {
       const result = await refreshRemote({ force: true });
       invalidateCache();
-      await repaintAllTabs();
-      return { result, info: await getDatasetInfo() };
-    }
-    case 'setRemoteUrl': {
-      await setRemoteUrl(message.url);
-      const result = await refreshRemote({ force: true });
       await repaintAllTabs();
       return { result, info: await getDatasetInfo() };
     }

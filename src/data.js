@@ -2,10 +2,11 @@
 // update channel. Remote entries are merged over bundled ones so the hosted
 // file only needs to carry additions and corrections.
 
+import { REPO } from './config.js';
 import { lookupKeys, registrableDomain } from './domain.js';
 
 export const DEFAULT_REMOTE_URL =
-  'https://raw.githubusercontent.com/OWNER/REPO/main/data/companies.json';
+  `https://raw.githubusercontent.com/${REPO}/main/data/companies.json`;
 
 const REFRESH_INTERVAL_MS = 12 * 60 * 60 * 1000; // 12 hours
 const FETCH_TIMEOUT_MS = 10_000;
@@ -33,14 +34,11 @@ async function loadBundled() {
   return bundledPromise;
 }
 
+// There is no UI for overriding the URL; set "remoteUrl" in chrome.storage.local
+// from the service worker console to test a branch or a fork.
 export async function getRemoteUrl() {
   const stored = await chrome.storage.local.get(STORAGE.url);
   return stored[STORAGE.url] || DEFAULT_REMOTE_URL;
-}
-
-export async function setRemoteUrl(url) {
-  await chrome.storage.local.set({ [STORAGE.url]: url });
-  mergedCache = null;
 }
 
 /** True when the configured URL is still the unedited placeholder. */
@@ -51,6 +49,11 @@ export function isPlaceholderUrl(url) {
 function isValidDataset(data) {
   return Boolean(data) && typeof data === 'object' && data.entries &&
     typeof data.entries === 'object';
+}
+
+/** dataVersion is an ISO date, so string order is date order. */
+function isOlder(version, than) {
+  return typeof version === 'string' && typeof than === 'string' && version < than;
 }
 
 /**
@@ -108,9 +111,13 @@ async function getMerged() {
     chrome.storage.local.get([STORAGE.remote, STORAGE.fetchedAt])
   ]);
   const remote = stored[STORAGE.remote];
+  // A cached copy older than the bundled file would undo the corrections a new
+  // release ships with, so it sits out until the hosted file catches up.
+  const useRemote =
+    isValidDataset(remote) && !isOlder(remote.dataVersion, bundled.dataVersion);
 
   const entries = { ...bundled.entries };
-  if (isValidDataset(remote)) {
+  if (useRemote) {
     for (const [domain, entry] of Object.entries(remote.entries)) {
       // A remote entry marked "removed" retracts a bundled one.
       if (entry && entry.status === 'removed') delete entries[domain];
@@ -121,7 +128,7 @@ async function getMerged() {
   mergedCache = {
     entries,
     bundledVersion: bundled.dataVersion,
-    remoteVersion: isValidDataset(remote) ? remote.dataVersion : null,
+    remoteVersion: useRemote ? remote.dataVersion : null,
     fetchedAt: stored[STORAGE.fetchedAt] || null
   };
   return mergedCache;
