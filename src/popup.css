@@ -32,6 +32,11 @@
   box-sizing: border-box;
 }
 
+/* .row, .details and .source set display, which would otherwise beat [hidden]. */
+[hidden] {
+  display: none !important;
+}
+
 body {
   width: 320px;
   margin: 0;
@@ -178,7 +183,13 @@ dd {
   color: var(--accent);
   font: inherit;
   font-size: 11px;
+  text-decoration: none;
   cursor: pointer;
+}
+
+.link-button:disabled {
+  color: var(--muted);
+  cursor: default;
 }
 
 .link-button:hover {
@@ -190,46 +201,10 @@ dd {
   justify-self: start;
 }
 
-.settings {
-  display: grid;
-  gap: 6px;
-  padding-top: 4px;
-}
-
-.settings label {
-  color: var(--muted);
-  font-size: 11px;
-}
-
-input[type="url"] {
-  width: 100%;
-  padding: 6px 8px;
-  border: 1px solid var(--hairline);
-  border-radius: 6px;
-  background: var(--bg);
-  color: var(--fg);
-  font: inherit;
-  font-size: 11px;
-}
-
-input[type="url"]:focus-visible,
 .link-button:focus-visible,
-.primary-button:focus-visible {
+.source:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 1px;
-}
-
-.primary-button {
-  justify-self: start;
-  padding: 5px 10px;
-  border: 0;
-  border-radius: 6px;
-  background: var(--accent);
-  color: #fff;
-  font: inherit;
-  font-size: 11px;
-  font-weight: 600;
-  cursor: pointer;
 }
 
 .status {

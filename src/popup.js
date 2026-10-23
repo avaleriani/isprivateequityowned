@@ -1,3 +1,5 @@
+import { REPO } from './config.js';
+
 const el = (id) => document.getElementById(id);
 
 const COPY = {
@@ -25,8 +27,10 @@ function describeStake(verdict) {
   return `${stake} ${basis}`;
 }
 
-function send(message) {
-  return chrome.runtime.sendMessage(message);
+async function send(message) {
+  const response = await chrome.runtime.sendMessage(message);
+  if (response?.error) throw new Error(response.error);
+  return response;
 }
 
 function setRow(rowId, valueId, value) {
@@ -92,31 +96,68 @@ function renderVerdict(verdict) {
   source.hidden = !safeSource;
 }
 
+/** A prefilled GitHub issue, so a correction arrives with the context it needs. */
+function reportUrl(verdict, info) {
+  const domain = verdict.matchedDomain || verdict.hostname;
+  const known = verdict.status === 'yes' || verdict.status === 'no';
+  const owners = Array.isArray(verdict.owners) ? verdict.owners.join(', ') : '';
+  const says = known
+    ? [COPY[verdict.status].mark, describeStake(verdict), owners].filter(Boolean).join(' · ')
+    : 'not in the dataset';
+  const body = [
+    `Domain: ${domain}`,
+    `Extension says: ${says}`,
+    `Dataset version: ${info?.remoteVersion || info?.bundledVersion || 'unknown'}`,
+    '',
+    known
+      ? "What's wrong, and a source that shows it:"
+      : 'Who owns it, and a source that shows it:',
+    ''
+  ].join('\n');
+  const params = new URLSearchParams({
+    title: `${known ? 'Correction' : 'Add'}: ${domain}`,
+    body
+  });
+  return `https://github.com/${REPO}/issues/new?${params}`;
+}
+
+function renderReport(verdict, info) {
+  const link = el('report');
+  if (!verdict) {
+    link.hidden = true;
+    return;
+  }
+  link.textContent = verdict.status === 'unknown' ? 'Know who owns it? Tell us' : 'Report a mistake';
+  link.href = reportUrl(verdict, info);
+  link.hidden = false;
+}
+
+// Kept short: the footer line has to fit beside the Refresh button at 320px.
 function formatAge(timestamp) {
-  if (!timestamp) return 'never updated';
+  if (!timestamp) return 'bundled';
   const minutes = Math.round((Date.now() - timestamp) / 60000);
-  if (minutes < 1) return 'updated just now';
-  if (minutes < 60) return `updated ${minutes}m ago`;
+  if (minutes < 1) return 'just now';
+  if (minutes < 60) return `${minutes}m ago`;
   const hours = Math.round(minutes / 60);
-  if (hours < 24) return `updated ${hours}h ago`;
-  return `updated ${Math.round(hours / 24)}d ago`;
+  if (hours < 24) return `${hours}h ago`;
+  return `${Math.round(hours / 24)}d ago`;
 }
 
 function renderInfo(info) {
   if (!info) return;
   const version = info.remoteVersion || info.bundledVersion || 'unknown';
-  el('dataset-meta').textContent =
-    `${info.entryCount} domains · v${version} · ${formatAge(info.fetchedAt)}`;
-  if (info.remoteUrl && !el('remote-url').value) {
-    el('remote-url').value = info.remoteUrl;
-  }
+  const meta = el('dataset-meta');
+  meta.textContent = `${info.entryCount} domains · v${version} · ${formatAge(info.fetchedAt)}`;
+  meta.title = info.fetchedAt
+    ? `Last fetched ${new Date(info.fetchedAt).toLocaleString()}`
+    : 'Using the dataset bundled with the extension';
   if (info.lastError) {
     showStatus(`Last fetch failed: ${info.lastError}`, true);
   }
 }
 
 function showStatus(text, isError = false) {
-  const status = el('settings-status');
+  const status = el('status');
   status.textContent = text;
   status.classList.toggle('error', isError);
   status.hidden = false;
@@ -126,33 +167,25 @@ async function init() {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   const { verdict, info } = await send({ type: 'getVerdict', url: tab?.url });
   renderVerdict(verdict);
+  renderReport(verdict, info);
   renderInfo(info);
 }
 
 el('refresh').addEventListener('click', async () => {
-  el('refresh').textContent = 'Refreshing…';
-  const { result, info } = await send({ type: 'refresh' });
-  el('refresh').textContent = 'Refresh';
-  renderInfo(info);
-  showStatus(result.ok ? 'Dataset up to date.' : result.reason, !result.ok);
-  await init();
-});
-
-el('toggle-settings').addEventListener('click', () => {
-  el('settings').hidden = !el('settings').hidden;
-});
-
-el('settings').addEventListener('submit', async (event) => {
-  event.preventDefault();
-  const url = el('remote-url').value.trim();
-  if (!url.startsWith('https://raw.githubusercontent.com/')) {
-    showStatus('URL must be a https://raw.githubusercontent.com/… link.', true);
-    return;
+  const button = el('refresh');
+  button.textContent = 'Refreshing…';
+  button.disabled = true;
+  try {
+    const { result, info } = await send({ type: 'refresh' });
+    renderInfo(info);
+    showStatus(result.ok ? 'Dataset up to date.' : result.reason, !result.ok);
+    await init();
+  } catch (err) {
+    showStatus(`Refresh failed: ${err.message}`, true);
+  } finally {
+    button.textContent = 'Refresh';
+    button.disabled = false;
   }
-  const { result, info } = await send({ type: 'setRemoteUrl', url });
-  renderInfo(info);
-  showStatus(result.ok ? 'Saved and fetched.' : result.reason, !result.ok);
-  await init();
 });
 
-init();
+init().catch((err) => showStatus(`Could not load: ${err.message}`, true));

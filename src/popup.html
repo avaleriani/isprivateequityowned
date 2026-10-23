@@ -46,15 +46,10 @@
         <span id="dataset-meta">…</span>
         <button id="refresh" type="button" class="link-button">Refresh</button>
       </div>
-      <button id="toggle-settings" type="button" class="link-button subtle">
-        Data source
-      </button>
-      <form id="settings" class="settings" hidden>
-        <label for="remote-url">Dataset URL (raw GitHub JSON)</label>
-        <input id="remote-url" type="url" spellcheck="false" placeholder="https://raw.githubusercontent.com/…" />
-        <button type="submit" class="primary-button">Save &amp; fetch</button>
-        <p id="settings-status" class="status" hidden></p>
-      </form>
+      <p id="status" class="status" hidden></p>
+      <a id="report" class="link-button subtle" hidden target="_blank" rel="noopener noreferrer">
+        Report a mistake
+      </a>
     </footer>
 
     <script type="module" src="popup.js"></script>
