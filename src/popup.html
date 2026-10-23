@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="popup.css" />
+    <title>Is Private Equity Owned?</title>
+  </head>
+  <body>
+    <main id="card" class="card state-loading">
+      <div class="verdict">
+        <span id="verdict-mark" class="mark">…</span>
+        <div class="verdict-text">
+          <h1 id="verdict-title">Checking…</h1>
+          <p id="domain" class="domain"></p>
+        </div>
+      </div>
+
+      <dl id="details" class="details" hidden>
+        <div class="row" id="row-company" hidden>
+          <dt>Company</dt>
+          <dd id="company"></dd>
+        </div>
+        <div class="row" id="row-owners" hidden>
+          <dt>Owners</dt>
+          <dd id="owners"></dd>
+        </div>
+        <div class="row" id="row-stake" hidden>
+          <dt>PE stake</dt>
+          <dd id="stake"></dd>
+        </div>
+        <div class="row" id="row-since" hidden>
+          <dt>Since</dt>
+          <dd id="since"></dd>
+        </div>
+      </dl>
+
+      <p id="note" class="note" hidden></p>
+
+      <a id="source" class="source" hidden target="_blank" rel="noopener noreferrer">
+        Check the source &rarr;
+      </a>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-line">
+        <span id="dataset-meta">…</span>
+        <button id="refresh" type="button" class="link-button">Refresh</button>
+      </div>
+      <button id="toggle-settings" type="button" class="link-button subtle">
+        Data source
+      </button>
+      <form id="settings" class="settings" hidden>
+        <label for="remote-url">Dataset URL (raw GitHub JSON)</label>
+        <input id="remote-url" type="url" spellcheck="false" placeholder="https://raw.githubusercontent.com/…" />
+        <button type="submit" class="primary-button">Save &amp; fetch</button>
+        <p id="settings-status" class="status" hidden></p>
+      </form>
+    </footer>
+
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>
