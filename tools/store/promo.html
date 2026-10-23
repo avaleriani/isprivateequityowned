@@ -1,0 +1,28 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+  * { box-sizing: border-box; margin: 0; }
+  html, body { overflow: hidden; }
+  body { background: radial-gradient(120% 140% at 0% 0%, #262a33 0%, #16181d 60%); color: #eceef2; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif; display: flex; align-items: center; }
+  .chip { display: inline-grid; place-items: center; border-radius: 7px; font-weight: 700; color: #fff; letter-spacing: .01em; }
+  .muted { color: #9aa1ad; }
+</style></head>
+<body>
+<div id="root"></div>
+<script>
+  const big = new URLSearchParams(location.search).get('size') === 'marquee';
+  const W = big ? 1400 : 440, H = big ? 560 : 280, k = big ? 2.2 : 1;
+  document.documentElement.style.width = document.body.style.width = W + 'px';
+  document.documentElement.style.height = document.body.style.height = H + 'px';
+  document.body.style.padding = `0 ${Math.round(36 * k)}px`;
+  const chips = [['88%', '#C0392B'], ['YES', '#C0392B'], ['17%', '#1E8E4E'], ['NO', '#1E8E4E'], ['?', '#6B7280']];
+  document.getElementById('root').innerHTML = `
+    <div style="display:flex;align-items:center;gap:${14 * k}px;margin-bottom:${16 * k}px">
+      <img src="icon128.png" style="width:${64 * k}px;height:${64 * k}px;margin:${-8 * k}px">
+      <div style="font-size:${28 * k}px;font-weight:750;letter-spacing:-0.02em;line-height:1.1">Is Private Equity<br>Owned?</div>
+    </div>
+    <div class="muted" style="font-size:${16 * k}px;line-height:1.4;margin-bottom:${18 * k}px">Who owns the site you're on, right in your toolbar.</div>
+    <div style="display:flex;gap:${8 * k}px">${chips.map(([t, c]) =>
+      `<span class="chip" style="background:${c};height:${26 * k}px;min-width:${40 * k}px;padding:0 ${8 * k}px;font-size:${13 * k}px;border-radius:${7 * k}px">${t}</span>`).join('')}</div>`;
+</script>
+</body></html>

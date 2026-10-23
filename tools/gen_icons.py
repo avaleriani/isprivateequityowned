@@ -14,6 +14,10 @@ import zlib
 SIZES = (16, 32, 48, 128)
 SS = 8  # supersampling factor
 
+# Chrome Web Store guidance: the 128px icon is 96px of art inside 16px of
+# transparent padding. The toolbar sizes fill their canvas.
+PADDING = {128: 16}
+
 BG = (26, 29, 36, 255)       # charcoal
 BAR = (240, 242, 246, 255)   # off-white
 ACCENT = (192, 57, 43, 255)  # the "yes" red, on the tallest bar
@@ -92,6 +96,16 @@ def downsample(src, n, factor):
     return out
 
 
+def pad(pixels, n, margin):
+    """Centers an n x n RGBA image on a transparent canvas, margin on every side."""
+    size = n + 2 * margin
+    out = bytearray(size * size * 4)
+    for y in range(n):
+        o = ((y + margin) * size + margin) * 4
+        out[o:o + n * 4] = pixels[y * n * 4:(y + 1) * n * 4]
+    return out
+
+
 def write_png(path, pixels, n):
     raw = bytearray()
     for y in range(n):
@@ -115,8 +129,11 @@ def main():
     out_dir = os.path.join(root, "icons")
     os.makedirs(out_dir, exist_ok=True)
     for size in SIZES:
-        big = render(size * SS)
-        small = downsample(big, size, SS)
+        margin = PADDING.get(size, 0)
+        art = size - 2 * margin
+        small = downsample(render(art * SS), art, SS)
+        if margin:
+            small = pad(small, art, margin)
         path = os.path.join(out_dir, f"icon{size}.png")
         write_png(path, small, size)
         print(f"wrote {path}")

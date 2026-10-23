@@ -1,0 +1,11 @@
+{
+  "name": "isprivateequityowned",
+  "private": true,
+  "type": "module",
+  "description": "Chrome extension that tells you whether the site you're on is owned by private equity.",
+  "license": "MIT",
+  "scripts": {
+    "validate": "node tools/validate.js",
+    "package": "sh tools/package.sh"
+  }
+}

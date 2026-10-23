@@ -1,0 +1,68 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 1280px; height: 800px; overflow: hidden; }
+  body { background: #eceef2; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif; color: #16181d; position: relative; }
+  .copy { position: absolute; left: 84px; top: 0; bottom: 0; width: 430px; display: flex; flex-direction: column; justify-content: center; }
+  .brand { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600; color: #4b5260; margin-bottom: 28px; }
+  .brand img { width: 30px; height: 30px; }
+  h1 { font-size: 46px; line-height: 1.08; letter-spacing: -0.025em; font-weight: 750; }
+  h1 em { font-style: normal; color: var(--accent, #c0392b); }
+  p.sub { margin-top: 20px; font-size: 19px; line-height: 1.5; color: #555c69; }
+  .window { position: absolute; right: 64px; top: 64px; width: 640px; height: 672px; background: #fff; border-radius: 14px; box-shadow: 0 1px 2px rgba(16,24,40,.08), 0 24px 60px rgba(16,24,40,.16); overflow: hidden; }
+  .tabs { height: 42px; background: #dfe2e7; display: flex; align-items: flex-end; padding: 0 14px; gap: 14px; }
+  .lights { display: flex; gap: 7px; align-self: center; }
+  .lights i { width: 12px; height: 12px; border-radius: 50%; display: block; background: #c9ccd2; }
+  .tab { background: #fff; height: 32px; width: 210px; border-radius: 9px 9px 0 0; display: flex; align-items: center; padding: 0 12px; gap: 8px; font-size: 12.5px; color: #3a404c; }
+  .tab b { width: 14px; height: 14px; border-radius: 4px; background: #d5d9e0; display: block; }
+  .bar { height: 46px; display: flex; align-items: center; gap: 10px; padding: 0 12px; border-bottom: 1px solid #e6e8ec; }
+  .url { flex: 1; height: 32px; border-radius: 16px; background: #f1f3f5; display: flex; align-items: center; padding: 0 14px; font-size: 13.5px; color: #3a404c; }
+  .url span { color: #8a909c; }
+  .ext { position: relative; width: 32px; height: 32px; border-radius: 8px; background: #e8ebf0; display: grid; place-items: center; }
+  .ext img { width: 18px; height: 18px; }
+  .badge { position: absolute; right: -7px; bottom: -3px; min-width: 18px; padding: 0 4px; height: 15px; border-radius: 4px; font-size: 10px; font-weight: 700; line-height: 15px; color: #fff; text-align: center; letter-spacing: .01em; }
+  .dots { width: 20px; display: grid; gap: 3px; justify-items: center; }
+  .dots i { width: 4px; height: 4px; border-radius: 50%; background: #8a909c; display: block; }
+  .page { padding: 34px 36px; display: grid; gap: 14px; }
+  .page i { display: block; height: 12px; border-radius: 6px; background: #eef0f3; }
+  .page .hero { height: 150px; border-radius: 10px; background: #f3f4f7; }
+  .popup { position: absolute; right: 24px; top: 96px; width: 320px; transform: scale(1.42); transform-origin: top right; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 6px rgba(16,24,40,.12), 0 18px 44px rgba(16,24,40,.22); background: #fff; }
+  .popup iframe { display: block; width: 320px; height: 300px; border: 0; }
+</style></head>
+<body>
+  <div class="copy">
+    <div class="brand"><img src="icon128.png" alt="">Is Private Equity Owned?</div>
+    <h1 id="h"></h1>
+    <p class="sub" id="s"></p>
+  </div>
+  <div class="window">
+    <div class="tabs"><div class="lights"><i></i><i></i><i></i></div><div class="tab"><b></b><span id="tabname"></span></div></div>
+    <div class="bar">
+      <div class="url"><span>https://www.</span><span id="host" style="color:#2a2f38"></span></div>
+      <div class="ext"><img src="icon32.png" alt=""><div class="badge" id="badge"></div></div>
+      <div class="dots"><i></i><i></i><i></i></div>
+    </div>
+    <div class="page">
+      <i class="hero"></i><i style="width:70%"></i><i style="width:88%"></i><i style="width:56%"></i><i style="width:80%"></i><i style="width:64%"></i>
+    </div>
+    <div class="popup"><iframe id="frame"></iframe></div>
+  </div>
+<script>
+  const q = new URLSearchParams(location.search);
+  const d = q.get('d');
+  document.getElementById('h').innerHTML = q.get('h');
+  document.getElementById('s').textContent = q.get('s');
+  document.getElementById('host').textContent = d + '/';
+  document.getElementById('tabname').textContent = q.get('t') || d;
+  const badge = document.getElementById('badge');
+  badge.textContent = q.get('b');
+  badge.style.background = q.get('c');
+  if (q.get('a')) document.body.style.setProperty('--accent', q.get('a'));
+  const frame = document.getElementById('frame');
+  frame.src = 'popup.html?d=' + encodeURIComponent(d);
+  frame.addEventListener('load', () => setTimeout(() => {
+    frame.style.height = frame.contentDocument.body.scrollHeight + 'px';
+  }, 400));
+</script>
+</body></html>

@@ -29,7 +29,7 @@ The badge updates on tab switch and on navigation.
 Two layers:
 
 - **Bundled** — `data/companies.json` ships inside the extension. It works offline and is what you see on a fresh install.
-- **Remote** — a copy of the same JSON hosted on GitHub. The service worker fetches it on install, on browser start, and every 12 hours, then caches it in `chrome.storage.local`. Remote entries are merged *over* the bundled ones, so the hosted file only needs to carry additions and corrections.
+- **Remote** — a copy of the same JSON hosted on GitHub. The service worker fetches it on install, on browser start, and every 12 hours, then caches it in `chrome.storage.local`. Remote entries are merged *over* the bundled ones, so the hosted file only needs to carry additions and corrections. A cached copy whose `dataVersion` is older than the bundled file's is ignored, so a stale cache can't undo the corrections a new release ships with.
 
 To retract a bundled entry from the remote file, set its status to `"removed"`:
 
@@ -37,25 +37,38 @@ To retract a bundled entry from the remote file, set its status to `"removed"`:
 { "entries": { "example.com": { "status": "removed" } } }
 ```
 
-### Pointing it at your repo
+### Where the remote copy lives
 
-The default URL in `src/data.js` is a placeholder (`OWNER/REPO`). Until you change it, the extension runs on bundled data only and the popup reports "No dataset URL configured yet."
+`src/config.js` names the repo — `avaleriani/isprivateequityowned` — and the extension fetches `data/companies.json` from its `main` branch on `raw.githubusercontent.com`. The same repo receives the popup's **Report a mistake** issues. A fork changes that one line.
 
-Either edit `DEFAULT_REMOTE_URL` in `src/data.js`, or set it at runtime: open the popup → **Data source** → paste the raw URL → **Save & fetch**. Only `https://raw.githubusercontent.com/…` URLs are accepted, matching the extension's `host_permissions`.
+To test a branch without rebuilding, set an override from the service worker console (`chrome://extensions` → the extension → *Inspect views: service worker*), then press **Refresh** in the popup:
 
+```js
+chrome.storage.local.set({ remoteUrl: 'https://raw.githubusercontent.com/<owner>/<repo>/<branch>/data/companies.json' })
 ```
-https://raw.githubusercontent.com/<owner>/<repo>/main/data/companies.json
-```
 
-### Publishing an update
+Only `raw.githubusercontent.com` can be fetched, matching the extension's `host_permissions`. `chrome.storage.local.remove('remoteUrl')` goes back to the default.
+
+### Publishing a data update
 
 ```bash
-node tools/validate.js     # gates the file: schema, duplicate keys, https sources, stale holds
+npm run validate     # gates the file: schema, duplicate keys, https sources, stale holds
 ```
 
 It exits non-zero on any error, so it works as a pre-commit or CI gate. It also warns on any `yes` entry held 12+ years without a re-check — long holds are where a missed exit is most likely to be hiding.
 
-Then bump `dataVersion` and `verifiedOn`, commit, and push to the repo behind your `DEFAULT_REMOTE_URL`. Installed extensions pick it up within 12 hours, or immediately via **Refresh** in the popup.
+Then bump `dataVersion` (and `verifiedOn`, if every entry was re-checked), commit, and push to `main`. Installed extensions pick it up within 12 hours, or immediately via **Refresh** in the popup. No store release is needed for data-only changes.
+
+## Releasing to the Chrome Web Store
+
+```bash
+npm run package      # validates, then writes dist/isprivateequityowned-<version>.zip
+sh tools/store/render.sh   # re-renders store/ screenshots and promo tiles (needs Chrome)
+```
+
+The zip holds only what the extension loads: `manifest.json`, `src/`, `data/companies.json`, `icons/`. Push the dataset to `main` before submitting, so the hosted copy is never older than the bundled one, and bump `version` in `manifest.json` for every upload.
+
+`store/listing.md` has the dashboard copy ready to paste: description, category, permission justifications, data-use answers and the privacy policy link.
 
 ### Entry format
 
@@ -116,6 +129,7 @@ The `?` state exists so the extension never claims a site is clean merely becaus
 
 ```
 manifest.json         MV3 manifest
+src/config.js         The GitHub repo for the hosted dataset and issue reports
 src/background.js     Service worker: badge painting, refresh alarm, messaging
 src/data.js           Dataset load, remote fetch/cache, lookup
 src/domain.js         Hostname normalization and label-chain walk
@@ -123,6 +137,10 @@ src/popup.*           Popup UI
 data/companies.json   Seed dataset
 tools/gen_icons.py    Regenerates icons/ (stdlib only)
 tools/validate.js     Validates the dataset before publishing
+tools/package.sh      Builds the store zip into dist/
+tools/store/          Renders store/ screenshots from the real popup code
+store/                Store listing copy, screenshots and promo tiles
+PRIVACY.md            Privacy policy linked from the store listing
 ```
 
 ## Permissions
@@ -132,4 +150,8 @@ tools/validate.js     Validates the dataset before publishing
 - `alarms` — schedule the 12-hour refresh.
 - `host_permissions: raw.githubusercontent.com` — fetch the hosted dataset.
 
-No content scripts, no analytics, no page access. Nothing about your browsing leaves the machine — lookups are local against the cached dataset.
+No content scripts, no analytics, no page access. Nothing about your browsing leaves the machine — lookups are local against the cached dataset. The one exception is opt-in: **Report a mistake** opens a GitHub issue pre-filled with the current domain, which is only sent if you post it. See [PRIVACY.md](PRIVACY.md).
+
+## License
+
+Code: [MIT](LICENSE). Dataset (`data/companies.json`): [CC BY 4.0](LICENSE-DATA) — reuse it freely with attribution.
