@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "dataVersion": "2026-07-30",
+  "dataVersion": "2026-10-23",
   "verifiedOn": "2026-07-27",
   "notes": "status: 'yes' = controlled by one or more private equity firms; 'no' = verified not PE-controlled (public and widely held, founder/family owned, nonprofit, or a subsidiary of a non-PE parent). Absent domains resolve to 'unknown'. Every 'yes' entry was checked against the linked primary source on the verifiedOn date. 'no' entries for large, widely-held public companies carry no source link because their listing status is the evidence. Ownership changes constantly — re-verify before relying on an entry.",
   "entries": {
@@ -185,20 +185,19 @@
       "source": "https://www.sycamorepartners.com/news-article/knitwell-group-adds-chicos-white-house-black-market-and-soma"
     },
     "hottopic.com": {
-      "status": "yes",
+      "status": "no",
       "company": "Hot Topic",
-      "owners": ["Sycamore Partners"],
-      "since": 2013,
-      "source": "https://www.sycamorepartners.com/news-article/sycamore-partners-completes-acquisition-of-hot-topic-inc"
+      "note": "Owned by Sycamore Partners from 2013 until Sycamore sold it in September 2026 to Spencer Spirit Holdings, the privately held parent of Spencer's and Spirit Halloween.",
+      "source": "https://www.prnewswire.com/news-releases/spencer-spirit-holdings-inc-completes-acquisition-of-hot-topic-inc-302868189.html"
     },
     "torrid.com": {
       "status": "yes",
       "company": "Torrid",
       "owners": ["Sycamore Partners"],
       "since": 2013,
-      "stake": 78,
-      "note": "Publicly listed since 2021, but Sycamore still holds roughly 78%.",
-      "source": "https://en.wikipedia.org/wiki/Torrid_Holdings"
+      "stake": 58.6,
+      "note": "Publicly listed since 2021; Sycamore held about 59% as of April 2026 after secondary share sales.",
+      "source": "https://www.sec.gov/Archives/edgar/data/1792781/000179278126000021/thi-20260416.htm"
     },
     "petsmart.com": {
       "status": "yes",
@@ -264,10 +263,10 @@
     "cengage.com": {
       "status": "yes",
       "company": "Cengage Group",
-      "owners": ["Apax Partners", "OMERS", "KKR", "Apollo Global Management", "Searchlight Capital Partners"],
+      "owners": ["Apax Partners", "KKR", "Searchlight Capital Partners", "Apollo Global Management"],
       "since": 2007,
-      "note": "PE-owned since the 2007 Apax/OMERS buyout; the cap table widened after the 2020 restructuring and Apollo's 2023 investment. An IPO was being weighed for 2026.",
-      "source": "https://www.cengagegroup.com/news/press-releases/2023/cengage-group-announces-investment-from-apollo-funds/"
+      "note": "PE-owned since the 2007 Apax/OMERS buyout. Former first-lien lenders including Apax, KKR and Searchlight took majority ownership in the 2014 Chapter 11 restructuring, and Apollo funds bought $500m of convertible preferred in 2023. An IPO was weighed for 2026 but had not happened by October 2026.",
+      "source": "https://www.cengage.com/restructuring/pdfs/emergence_faq.pdf"
     },
     "hmhco.com": {
       "status": "yes",
@@ -610,8 +609,8 @@
       "company": "GoTo Foods (formerly Focus Brands)",
       "owners": ["Roark Capital"],
       "since": 2004,
-      "note": "Parent of Auntie Anne's, Carvel, Cinnabon, Jamba, McAlister's Deli, Moe's Southwest Grill and Schlotzsky's.",
-      "source": "https://en.wikipedia.org/wiki/GoTo_Foods"
+      "note": "Parent of Auntie Anne's, Carvel, Cinnabon, Jamba, McAlister's Deli, Moe's Southwest Grill and Schlotzsky's. Formed by Roark in 2004 around Carvel, which it bought in 2001.",
+      "source": "https://web.archive.org/web/20250722090729/https://www.roarkcapital.com/files/FOCUS-Brands-Cinnabon.pdf"
     },
     "auntieannes.com": {
       "status": "yes",
@@ -619,23 +618,23 @@
       "owners": ["Roark Capital"],
       "since": 2010,
       "note": "Via GoTo Foods.",
-      "source": "https://en.wikipedia.org/wiki/GoTo_Foods"
+      "source": "https://www.globenewswire.com/news-release/2010/11/08/965085/0/en/Roark-Capital-Portfolio-Company-FOCUS-Brands-R-Completes-Purchase-of-Auntie-Anne-s-R.html"
     },
     "cinnabon.com": {
       "status": "yes",
       "company": "Cinnabon",
       "owners": ["Roark Capital"],
       "since": 2004,
-      "note": "Via GoTo Foods.",
-      "source": "https://en.wikipedia.org/wiki/GoTo_Foods"
+      "note": "Via GoTo Foods. Bought from AFC Enterprises in 2004.",
+      "source": "https://www.sec.gov/Archives/edgar/data/0001041379/000095014404010495/g91689e8vk.htm"
     },
     "carvel.com": {
       "status": "yes",
       "company": "Carvel",
       "owners": ["Roark Capital"],
-      "since": 2004,
-      "note": "Via GoTo Foods.",
-      "source": "https://en.wikipedia.org/wiki/GoTo_Foods"
+      "since": 2001,
+      "note": "Via GoTo Foods. Roark bought Carvel in November 2001, its first deal.",
+      "source": "https://web.archive.org/web/20250722090729/https://www.roarkcapital.com/files/FOCUS-Brands-Cinnabon.pdf"
     },
     "jamba.com": {
       "status": "yes",
@@ -651,7 +650,7 @@
       "owners": ["Roark Capital"],
       "since": 2005,
       "note": "Via GoTo Foods.",
-      "source": "https://en.wikipedia.org/wiki/GoTo_Foods"
+      "source": "https://web.archive.org/web/20250415234839/https://www.roarkcapital.com/files/McAlisters-Press-Release.pdf"
     },
     "moes.com": {
       "status": "yes",
@@ -659,7 +658,7 @@
       "owners": ["Roark Capital"],
       "since": 2007,
       "note": "Via GoTo Foods.",
-      "source": "https://en.wikipedia.org/wiki/GoTo_Foods"
+      "source": "https://www.franchising.com/news/20070830_focus_brands_and_roark_capital_complete_purchase_o.html"
     },
     "schlotzskys.com": {
       "status": "yes",
@@ -667,14 +666,14 @@
       "owners": ["Roark Capital"],
       "since": 2006,
       "note": "Via GoTo Foods.",
-      "source": "https://en.wikipedia.org/wiki/GoTo_Foods"
+      "source": "https://web.archive.org/web/20260717212341/https://www.roarkcapital.com/files/FOCUS-Brands-Schlotzskys.pdf"
     },
     "anytimefitness.com": {
       "status": "yes",
       "company": "Anytime Fitness",
       "owners": ["Roark Capital"],
       "since": 2014,
-      "note": "Via Purpose Brands, formed by the 2024 merger of Self Esteem Brands and Orangetheory.",
+      "note": "Via Purpose Brands, formed by the 2024 merger of Self Esteem Brands and Orangetheory. Roark's 2014 stake was reported as a minority one; its current share is not disclosed.",
       "source": "https://www.prnewswire.com/news-releases/orangetheory-fitness-and-self-esteem-brands-complete-merger-creating-the-worlds-largest-footprint-in-fitness-health-and-wellness-services-302105939.html"
     },
     "orangetheory.com": {
@@ -877,9 +876,10 @@
       "company": "Mister Car Wash",
       "owners": ["Leonard Green & Partners"],
       "since": 2014,
-      "stake": 100,
-      "note": "Leonard Green held about 67% before taking the company fully private in a $3.1bn deal completed in 2026.",
-      "source": "https://ir.mistercarwash.com/news-releases/news-release-details/mister-car-wash-be-taken-private-leonard-green-partners-700"
+      "stake": 99.4,
+      "stakeSource": "https://www.sec.gov/Archives/edgar/data/1853513/000119312526229921/d847314dsc13e3a.htm",
+      "note": "Leonard Green held about 67% before taking the company private in a $3.1bn deal completed in May 2026; management rolled over about 0.6%.",
+      "source": "https://www.sec.gov/Archives/edgar/data/1853513/000119312526229866/d128344d8k.htm"
     },
     "crunch.com": {
       "status": "yes",
@@ -986,7 +986,7 @@
       "owners": ["Alden Global Capital"],
       "since": 2010,
       "note": "Via MediaNews Group / Digital First Media.",
-      "source": "https://arkvalleyvoice.com/vulture-hedge-funds-that-bought-the-denver-post-poised-to-gobble-up-chicago-tribune/"
+      "source": "https://www.denverpost.com/2018/04/06/as-vultures-circle-the-denver-post-must-be-saved/"
     },
     "mercurynews.com": {
       "status": "yes",
@@ -994,7 +994,7 @@
       "owners": ["Alden Global Capital"],
       "since": 2010,
       "note": "Via MediaNews Group / Digital First Media.",
-      "source": "https://arkvalleyvoice.com/vulture-hedge-funds-that-bought-the-denver-post-poised-to-gobble-up-chicago-tribune/"
+      "source": "https://www.ktvu.com/news/medianews-group-buys-press-democrat-other-north-bay-publications"
     },
     "ocregister.com": {
       "status": "yes",
@@ -1010,7 +1010,7 @@
       "owners": ["Alden Global Capital"],
       "since": 2010,
       "note": "Via MediaNews Group / Digital First Media.",
-      "source": "https://arkvalleyvoice.com/vulture-hedge-funds-that-bought-the-denver-post-poised-to-gobble-up-chicago-tribune/"
+      "source": "https://www.cbsnews.com/minnesota/news/southwest-news-media-local-minnesota-newspapers-end-publication"
     },
     "bostonherald.com": {
       "status": "yes",
@@ -1127,34 +1127,34 @@
     "saksfifthavenue.com": {
       "status": "yes",
       "company": "Saks Fifth Avenue",
-      "owners": ["Rhône Capital", "Insight Partners"],
-      "since": 2013,
-      "note": "Via Saks Global (formerly HBC). Rhône Capital is the lead investor; Amazon and Salesforce hold minority stakes.",
-      "source": "https://www.businesswire.com/news/home/20240704775954/en/HBC-Parent-of-Saks-Fifth-Avenue-to-Acquire-Neiman-Marcus-Group-for-%242.65-Billion-and-Establish-Saks-Global-a-Technology-Powered-Luxury-Retail-Company"
+      "owners": ["Pentwater Capital Management", "Bracebridge Capital"],
+      "since": 2026,
+      "note": "Via Exemplar Luxury Group (formerly Saks Global). Its lenders took ownership when it exited Chapter 11 in June 2026, wiping out prior shareholders including Rhône; Pentwater and Bracebridge each hold two of seven board seats.",
+      "source": "https://www.paulweiss.com/insights/client-news/saks-global-emerges-from-bankruptcy"
     },
     "saksoff5th.com": {
       "status": "yes",
       "company": "Saks OFF 5TH",
-      "owners": ["Rhône Capital", "Insight Partners"],
-      "since": 2013,
-      "note": "Via Saks Global.",
-      "source": "https://www.businesswire.com/news/home/20240704775954/en/HBC-Parent-of-Saks-Fifth-Avenue-to-Acquire-Neiman-Marcus-Group-for-%242.65-Billion-and-Establish-Saks-Global-a-Technology-Powered-Luxury-Retail-Company"
+      "owners": ["Pentwater Capital Management", "Bracebridge Capital"],
+      "since": 2026,
+      "note": "SaksOFF5TH.com shut down in early 2026. The 12 remaining outlet stores belong to Exemplar Luxury Group (formerly Saks Global), owned by its former lenders since June 2026.",
+      "source": "https://www.paulweiss.com/insights/client-news/saks-global-emerges-from-bankruptcy"
     },
     "neimanmarcus.com": {
       "status": "yes",
       "company": "Neiman Marcus",
-      "owners": ["Rhône Capital", "Insight Partners"],
-      "since": 2024,
-      "note": "Acquired for $2.65bn in 2024 and folded into Saks Global.",
-      "source": "https://www.businesswire.com/news/home/20240704775954/en/HBC-Parent-of-Saks-Fifth-Avenue-to-Acquire-Neiman-Marcus-Group-for-%242.65-Billion-and-Establish-Saks-Global-a-Technology-Powered-Luxury-Retail-Company"
+      "owners": ["Pentwater Capital Management", "Bracebridge Capital"],
+      "since": 2026,
+      "note": "Via Exemplar Luxury Group (formerly Saks Global, which bought Neiman Marcus in 2024). Its lenders took ownership when it exited Chapter 11 in June 2026, wiping out prior shareholders including Rhône.",
+      "source": "https://www.paulweiss.com/insights/client-news/saks-global-emerges-from-bankruptcy"
     },
     "bergdorfgoodman.com": {
       "status": "yes",
       "company": "Bergdorf Goodman",
-      "owners": ["Rhône Capital", "Insight Partners"],
-      "since": 2024,
-      "note": "Part of Neiman Marcus Group, acquired by Saks Global in 2024.",
-      "source": "https://www.businesswire.com/news/home/20240704775954/en/HBC-Parent-of-Saks-Fifth-Avenue-to-Acquire-Neiman-Marcus-Group-for-%242.65-Billion-and-Establish-Saks-Global-a-Technology-Powered-Luxury-Retail-Company"
+      "owners": ["Pentwater Capital Management", "Bracebridge Capital"],
+      "since": 2026,
+      "note": "Via Exemplar Luxury Group (formerly Saks Global). Its lenders took ownership when it exited Chapter 11 in June 2026, wiping out prior shareholders including Rhône.",
+      "source": "https://www.paulweiss.com/insights/client-news/saks-global-emerges-from-bankruptcy"
     },
     "goto.com": {
       "status": "yes",
@@ -1226,8 +1226,8 @@
       "status": "yes",
       "company": "TruGreen",
       "owners": ["Clayton, Dubilier & Rice"],
-      "since": 2014,
-      "note": "The largest lawn care company in the US, with roughly two million customers.",
+      "since": 2007,
+      "note": "The largest lawn care company in the US, with roughly two million customers. CD&R has controlled it since buying then-parent ServiceMaster in 2007; it was spun off as a standalone company in 2014.",
       "source": "https://www.cdr.com/portfolio/trugreen"
     },
     "neighborly.com": {
@@ -1276,7 +1276,7 @@
       "owners": ["Roark Capital"],
       "since": 2012,
       "note": "Bought from Sentinel Capital Partners. A long hold with no reported exit as of the verifiedOn date.",
-      "source": "https://www.roarkcapital.com/files/Press%20Release%20Massage%20Envy%20v10.pdf"
+      "source": "https://www.prnewswire.com/news-releases/roark-capital-acquires-massage-envy-172066941.html"
     },
     "primroseschools.com": {
       "status": "yes",
@@ -1340,7 +1340,7 @@
       "company": "HUB International",
       "owners": ["Hellman & Friedman", "Altas Partners", "Leonard Green & Partners"],
       "since": 2013,
-      "note": "Hellman & Friedman holds the controlling interest; Altas (2018) and Leonard Green (2023) are minority investors. An IPO was being prepared for 2026-27.",
+      "note": "Hellman & Friedman holds the controlling interest; Altas (2018) and Leonard Green (2023) are minority investors. HUB confidentially filed for a US IPO in June 2026.",
       "source": "https://www.hubinternational.com/media-center/press-releases/2025/05/hub-secures-significant-minority-investment-and-reaches-new-milestone/"
     },
     "usi.com": {
@@ -1615,8 +1615,8 @@
       "owners": ["Hg"],
       "since": 2006,
       "stake": 70.5,
-      "note": "Hg and co-investors hold about 70.5%. A London IPO has been repeatedly pushed back.",
-      "source": "https://www.privateequitywire.co.uk/hg-backed-visma-pushes-london-ipo-to-2027/"
+      "note": "Hg and its co-investors hold 70.5%; GIC (14.2%), other institutions and management hold the rest. A London IPO was pushed back to 2027 in March 2026.",
+      "source": "https://www.visma.com/organisation/board-and-owners/"
     },
     "ifs.com": {
       "status": "yes",
@@ -1958,8 +1958,8 @@
       "company": "David Lloyd Leisure",
       "owners": ["TDR Capital"],
       "since": 2013,
-      "note": "TDR moved the business into a new fund in a deal valuing it at about £2bn after several failed exit attempts.",
-      "source": "https://www.tdrcapital.com/portfolio/david-lloyd-leisure/"
+      "note": "In November 2025 TDR moved the business into a continuation fund, TDR Capital Titan, in a deal reported to value it at about £2bn after several failed exit attempts.",
+      "source": "https://www.tdrcapital.com/tdr-capital-iii-sells-david-lloyd-leisure-to-a-continuation-vehicle/"
     },
     "hollandandbarrett.com": {
       "status": "yes",
@@ -2704,8 +2704,8 @@
       "status": "yes",
       "company": "Caribou Coffee",
       "owners": ["JAB Holding Company"],
-      "since": 2012,
-      "note": "Held through Panera Brands, alongside Panera Bread and Einstein Bros.",
+      "since": 2013,
+      "note": "Held through Panera Brands, alongside Panera Bread and Einstein Bros. Its roasting and packaged-coffee business went to JDE Peet's in 2024; a 2024 sale process for the cafes produced no announced deal.",
       "source": "https://www.prnewswire.com/news-releases/jab-beech-inc-completes-acquisition-of-caribou-coffee-company-inc-188260531.html"
     },
     "familydollar.com": {
@@ -4110,8 +4110,9 @@
       "company": "Action",
       "owners": ["3i Group"],
       "since": 2011,
-      "stake": 62.3,
-      "note": "3i, a listed private equity firm, raised its holding in the Dutch discounter to about 62% during 2025.",
+      "stake": 65.4,
+      "stakeSource": "https://www.investegate.co.uk/announcement/rns/3i-group--iii/results-for-the-year-to-31-march-2026/9567567",
+      "note": "3i, a listed private equity firm, raised its holding in the Dutch discounter from 57.9% to 65.4% in the year to March 2026.",
       "source": "https://www.3i.com/private-equity/our-portfolio/action/"
     },
     "evri.co.uk": {
@@ -4441,9 +4442,9 @@
       "status": "yes",
       "company": "PortAventura World",
       "owners": ["Investindustrial", "KKR"],
-      "since": 2013,
+      "since": 2012,
       "stake": 100,
-      "note": "Investindustrial holds 50.1% and KKR 49.9% through Resort Holdings.",
+      "note": "Investindustrial became sole owner in 2012 and sold 49.9% to KKR in 2013; the two hold it through Resort Holdings. A sale was explored from 2023, but none has been agreed.",
       "source": "https://www.portaventuraworld.com/en/board-of-directors-and-investors"
     },
     "gardaland.it": {
@@ -4494,8 +4495,8 @@
       "company": "Einstein Bros. Bagels",
       "owners": ["JAB Holding Company"],
       "since": 2014,
-      "note": "Held through Panera Brands, alongside Panera Bread and Caribou Coffee.",
-      "source": "https://en.wikipedia.org/wiki/JAB_Holding_Company"
+      "note": "Held through Panera Brands, alongside Panera Bread and Caribou Coffee. A sale explored in 2024 has not produced an announced deal.",
+      "source": "https://www.sec.gov/Archives/edgar/data/0000949373/000119312514397957/d817963dex99a5b.htm"
     },
     "23andme.com": {
       "status": "no",
@@ -4902,7 +4903,8 @@
       "since": 2013,
       "stake": 55.5,
       "stakeBasis": "voting",
-      "note": "Publicly listed, but Bain held 55.5% of the voting power as of March 2025 through multiple voting shares. Bain was weighing a sale in 2025.",
+      "stakeSource": "https://www.sec.gov/Archives/edgar/data/1690511/000119312526295668/d146521dex991.htm",
+      "note": "Publicly listed, but Bain held 55.5% of the voting power (31.6% of shares) as of June 2026 through multiple voting shares. Bain explored a sale in 2025, but no deal had been announced by October 2026.",
       "source": "https://www.baincapital.com/news/canada-goose-signs-investment-deal-bain-capital-private-equity-accelerate-global-growth"
     },
     "goldengoose.com": {
@@ -7120,8 +7122,7 @@
     "flyfrontier.com": {
       "status": "no",
       "company": "Frontier Airlines",
-      "stake": 30,
-      "note": "Indigo Partners distributed most of its holding to its own investors in 2024. Chairman Bill Franke, who founded Indigo, remains the largest individual holder at close to 30%.",
+      "note": "Indigo Partners' holding vehicle distributed all its Frontier shares to its investors in April 2024. Chairman Bill Franke, Indigo's founder, beneficially owned about 43% as of March 2026: about 29% in his own name and 14% through Indigo Denver, an entity he solely owns.",
       "source": "https://www.sec.gov/Archives/edgar/data/1670076/000167007626000039/fron-20260402.htm"
     },
     "olaplex.com": {
